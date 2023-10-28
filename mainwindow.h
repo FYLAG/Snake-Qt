@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "gamewindow.h"
+#include "presenter.h"
 
 #include <QMainWindow>
 #include <QSize>
@@ -16,14 +17,15 @@ class MainWindow : public QMainWindow {
 
 public:
 
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(GameWindow *gameWin, Presenter *presenter, QWidget *parent = nullptr);
     ~MainWindow();
 
 private:
 
     Ui::MainWindow *ui;
 
-    GameWindow *game;
+    GameWindow *gameWin;
+    Presenter *presenter;
 
     QSize sizeArea;
 

@@ -1,8 +1,6 @@
 #ifndef SNAKE_H
 #define SNAKE_H
 
-#include "gamewindow.h"
-
 #include <QVector>
 #include <QPoint>
 
@@ -10,9 +8,11 @@ class Snake {
 
 public:
 
-    Snake(QPoint pointBegin);
+    Snake(QPoint pointStart);
 
     QPoint getPointSnake();
+
+    QVector<QPoint> getSnakeBlocks();
 
     void addSnakeBlock();
 
@@ -21,6 +21,7 @@ public:
 private:
 
     QVector<QPoint> snakeBlocks;
+    QPoint pointOld;
 
 };
 

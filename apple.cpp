@@ -1,5 +1,9 @@
 #include "apple.h"
 
-Apple::Apple() {
+Apple::Apple(QPoint pointCreate) {
+    this->pointApple = pointCreate;
+}
 
+QPoint Apple::getApple() {
+    return this->pointApple;
 }

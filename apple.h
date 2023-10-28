@@ -7,7 +7,7 @@ class Apple {
 
 public:
 
-    Apple();
+    Apple(QPoint pointCreate);
 
     QPoint getApple();
     void setApple(QPoint &point);

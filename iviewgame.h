@@ -8,16 +8,20 @@ class IViewGame {
 
 public:
 
-    // virtual void setApple(QPoint &point) = 0;
-    // virtual QPoint getApple() = 0;
+    virtual QPoint initSnake() = 0;
+    virtual QPoint initApple() = 0; // &snakeBlocks
 
     virtual void drawGrid() = 0;
     virtual void drawApple(QPoint applePoint) = 0;
-    virtual void drawSnake(QVector<QPoint> &snakePoints) = 0;
+    virtual void drawSnake(QVector<QPoint> snakePoints) = 0;
 
     virtual QPoint moveSnake() = 0;
 
+    virtual bool checkMatchSnakeAndApple(QPoint snake, QPoint apple) = 0;
+
 public: // signals
+
+    virtual void signalFrameNext() = 0;
 
 };
 

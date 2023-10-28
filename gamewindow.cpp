@@ -1,6 +1,8 @@
 #include "gamewindow.h"
 #include "ui_gamewindow.h"
 
+#include <QDebug>
+
 GameWindow::GameWindow(QSize _sizeArea, unsigned int _gameSpeed, QWidget *parent)
     : QMainWindow(parent), ui(new Ui::GameWindow), sizeArea(_sizeArea), DELAY(100 * _gameSpeed) {
 
@@ -11,13 +13,15 @@ GameWindow::GameWindow(QSize _sizeArea, unsigned int _gameSpeed, QWidget *parent
 
     this->sizeBlockPixel = { 50, 50 };
 
-    this->setWindowTitle("Snake2D");
-
     const QSize SIZE_WIN = sizeArea * sizeBlockPixel;
 
     this->resize(SIZE_WIN);
     this->setMinimumSize(SIZE_WIN);
     this->setMaximumSize(SIZE_WIN);
+
+    this->setWindowTitle("Snake2D");
+
+    this->gamePlay = true;
 
     startTimer(DELAY);
 
@@ -31,7 +35,7 @@ void GameWindow::timerEvent(QTimerEvent *event) {
 
     Q_UNUSED(event);
 
-    emit signalFrameNext();
+    this->update();
 
 }
 
@@ -66,13 +70,33 @@ void GameWindow::keyPressEvent(QKeyEvent *event) {
 
 void GameWindow::paintEvent(QPaintEvent *event) {
 
-    drawGrid();
-
-    // drawApple(QPoint applePoint)
-
-    // drawSnake(QVector<QPoint> &snakePoints);
+    if (this->gamePlay) {
+        emit signalFrameNext();
+    }
 
     Q_UNUSED(event);
+
+}
+
+QPoint GameWindow::initSnake() {
+
+    QPoint pointCenter = {
+        sizeArea.rwidth() / 2,
+        sizeArea.rheight() / 2
+    };
+
+    return pointCenter;
+
+}
+
+QPoint GameWindow::initApple() {
+
+    QPoint pointRandom = {
+        QRandomGenerator::global()->bounded(0, sizeArea.rwidth()),
+        QRandomGenerator::global()->bounded(0, sizeArea.rheight())
+    };
+
+    return pointRandom;
 
 }
 
@@ -99,22 +123,28 @@ void GameWindow::drawGrid() {
 void GameWindow::drawApple(QPoint applePoint) {
 
     QPainter paint(this);
+    paint.setPen(Qt::transparent);
     paint.setBrush(QColor(225, 25, 25));
 
-    paint.drawRect(applePoint.rx(), applePoint.ry(),
-                   sizeBlockPixel.rwidth(), sizeBlockPixel.rheight());
+    paint.drawRect(applePoint.rx() * sizeBlockPixel.rwidth(),
+                   applePoint.ry() * sizeBlockPixel.rheight(),
+                   sizeBlockPixel.rwidth(),
+                   sizeBlockPixel.rheight());
 
 }
 
-void GameWindow::drawSnake(QVector<QPoint> &snakePoints) {
+void GameWindow::drawSnake(QVector<QPoint> snakePoints) {
 
     QPainter paint(this);
+    paint.setPen(Qt::transparent);
     paint.setBrush(QColor(100, 200, 0));
 
     for (QPoint n : snakePoints) {
 
-            paint.drawRect(n.rx(), n.ry(),
-                           sizeBlockPixel.rwidth(), sizeBlockPixel.rheight());
+            paint.drawRect(n.rx() * sizeBlockPixel.rwidth(),
+                           n.ry() * sizeBlockPixel.rheight(),
+                           sizeBlockPixel.rwidth(),
+                           sizeBlockPixel.rheight());
 
     }
 
@@ -141,5 +171,9 @@ QPoint GameWindow::moveSnake() {
 
     }
 
+}
+
+bool GameWindow::checkMatchSnakeAndApple(QPoint snake, QPoint apple) {
+    return snake == apple;
 }
 

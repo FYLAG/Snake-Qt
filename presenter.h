@@ -21,6 +21,9 @@ private:
     Snake *snake;
     Apple *apple;
 
+    void initSnake();
+    void initApple();
+
 private slots:
 
     void refreshView();

@@ -7,11 +7,12 @@ int main(int argc, char *argv[]) {
 
     QApplication app(argc, argv);
 
-    // MainWindow win;
+    GameWindow *game = nullptr;
+    Presenter *presenter = nullptr;
 
-    GameWindow game({10, 10}, 1);
+    MainWindow win(game, presenter);
 
-    game.show();
+    win.show();
 
     return app.exec();
 

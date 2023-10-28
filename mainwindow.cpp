@@ -1,8 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow) {
+MainWindow::MainWindow(GameWindow *gameWin, Presenter *presenter, QWidget *parent)
+    : QMainWindow(parent), ui(new Ui::MainWindow), gameWin(gameWin), presenter(presenter) {
 
     ui->setupUi(this);
 
@@ -10,14 +10,14 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow() {
     delete ui;
-    delete game;
 }
 
 void MainWindow::on_pushButton_play_clicked() {
 
-    this->game = new GameWindow({10, 10}, 1);
+    this->gameWin = new GameWindow({11, 11}, 1);
+    this->presenter = new Presenter(gameWin);
 
-    this->game->show();
+    this->gameWin->show();
 
     this->hide();
 
