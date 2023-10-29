@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/icons/icons/icon.ico</normaloff>:/icons/icons/icon.ico</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <property name="leftMargin">
@@ -31,7 +35,7 @@
      <number>0</number>
     </property>
     <item row="0" column="0">
-     <widget class="QFrame" name="frame">
+     <widget class="QFrame" name="frameGamePause">
       <property name="enabled">
        <bool>true</bool>
       </property>
@@ -122,7 +126,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton">
+          <widget class="QPushButton" name="pushButton_close">
            <property name="icon">
             <iconset resource="resources.qrc">
              <normaloff>:/icons/icons/close.svg</normaloff>:/icons/icons/close.svg</iconset>
@@ -136,7 +140,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_2">
+          <widget class="QPushButton" name="pushButton_play">
            <property name="icon">
             <iconset resource="resources.qrc">
              <normaloff>:/icons/icons/play.svg</normaloff>:/icons/icons/play.svg</iconset>
@@ -150,7 +154,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_3">
+          <widget class="QPushButton" name="pushButton_reset">
            <property name="icon">
             <iconset resource="resources.qrc">
              <normaloff>:/icons/icons/rotate.svg</normaloff>:/icons/icons/rotate.svg</iconset>

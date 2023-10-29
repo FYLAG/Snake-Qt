@@ -8,6 +8,8 @@ class IViewGame {
 
 public:
 
+    virtual bool getGameStop() = 0;
+
     virtual QPoint initSnake() = 0;
     virtual QPoint initApple() = 0; // &snakeBlocks
 

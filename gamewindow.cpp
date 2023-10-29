@@ -4,12 +4,17 @@
 #include <QDebug>
 
 GameWindow::GameWindow(QSize _sizeArea, unsigned int _gameSpeed, QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::GameWindow), sizeArea(_sizeArea), DELAY(100 * _gameSpeed) {
+    : QMainWindow(parent), ui(new Ui::GameWindow), sizeArea(_sizeArea), DELAY(200 * _gameSpeed) {
 
     ui->setupUi(this);
-    ui->frame->hide();
+
+    ui->frameGamePause->hide();
+    // ui->frameGameOver->hide();
+    // ui->frameGameWin->hide();
 
     snakeMove = directionMove::Right;
+
+    setFocusPolicy(Qt::StrongFocus);
 
     this->sizeBlockPixel = { 50, 50 };
 
@@ -21,9 +26,11 @@ GameWindow::GameWindow(QSize _sizeArea, unsigned int _gameSpeed, QWidget *parent
 
     this->setWindowTitle("Snake2D");
 
-    this->gamePlay = true;
+    this->gameOver = false;
+    this->gameStop = false;
+    this->keyFree = true;
 
-    startTimer(DELAY);
+    timerId = startTimer(DELAY);
 
 }
 
@@ -37,32 +44,36 @@ void GameWindow::timerEvent(QTimerEvent *event) {
 
     this->update();
 
+    this->keyFree = true;
 }
 
 void GameWindow::keyPressEvent(QKeyEvent *event) {
 
     int key = event->key();
 
-    switch (key) {
+    if (key == Qt::Key_Escape) {
+        eventGameStop();
+    }
 
-        case Qt::Key_Up:
-            snakeMove = directionMove::Up;
-            break;
+    if (key == Qt::Key_Up && snakeMove != directionMove::Down && keyFree) {
 
-        case Qt::Key_Right:
-            snakeMove = directionMove::Right;
-            break;
+        snakeMove = directionMove::Up;
+        keyFree = false;
 
-        case Qt::Key_Down:
-            snakeMove = directionMove::Down;
-            break;
+    } else if (key == Qt::Key_Right && snakeMove != directionMove::Left && keyFree) {
 
-        case Qt::Key_Left:
-            snakeMove = directionMove::Left;
-            break;
+        snakeMove = directionMove::Right;
+        keyFree = false;
 
-        default:
-            break;
+    } else if (key == Qt::Key_Down && snakeMove != directionMove::Up && keyFree) {
+
+        snakeMove = directionMove::Down;
+        keyFree = false;
+
+    } else if (key == Qt::Key_Left && snakeMove != directionMove::Right && keyFree) {
+
+        snakeMove = directionMove::Left;
+        keyFree = false;
 
     }
 
@@ -70,12 +81,14 @@ void GameWindow::keyPressEvent(QKeyEvent *event) {
 
 void GameWindow::paintEvent(QPaintEvent *event) {
 
-    if (this->gamePlay) {
-        emit signalFrameNext();
-    }
+    emit signalFrameNext();
 
     Q_UNUSED(event);
 
+}
+
+bool GameWindow::getGameStop() {
+    return this->gameStop;
 }
 
 QPoint GameWindow::initSnake() {
@@ -175,5 +188,50 @@ QPoint GameWindow::moveSnake() {
 
 bool GameWindow::checkMatchSnakeAndApple(QPoint snake, QPoint apple) {
     return snake == apple;
+}
+
+void GameWindow::eventGameContinue() {
+
+    ui->frameGamePause->hide();
+    timerId = startTimer(DELAY);
+    this->gameStop = false;
+
+}
+
+void GameWindow::eventGameReset() {
+
+    ui->frameGamePause->hide();
+    timerId = startTimer(DELAY);
+
+}
+
+void GameWindow::eventGameStop() {
+
+    killTimer(timerId);
+    this->gameStop = true;
+    ui->frameGamePause->show();
+
+}
+
+void GameWindow::eventGameOver() {
+
+}
+
+void GameWindow::eventGameWin() {
+
+}
+
+void GameWindow::on_pushButton_play_clicked() {
+    eventGameContinue();
+}
+
+
+void GameWindow::on_pushButton_reset_clicked() {
+    eventGameReset();
+}
+
+
+void GameWindow::on_pushButton_close_clicked() {
+    this->close();
 }
 

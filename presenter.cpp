@@ -44,14 +44,18 @@ void Presenter::refreshView() {
 
     } else {
 
-        this->snake->moveSnake(view->moveSnake());
+        if (!this->view->getGameStop()) {
 
-        if (this->view->checkMatchSnakeAndApple(snake->getPointSnake(), apple->getApple())) {
+            this->snake->moveSnake(view->moveSnake());
 
-            this->snake->addSnakeBlock();
+            if (this->view->checkMatchSnakeAndApple(snake->getPointSnake(), apple->getApple())) {
 
-            delete this->apple;
-            this->apple = new Apple(this->view->initApple());
+                this->snake->addSnakeBlock();
+
+                delete this->apple;
+                this->apple = new Apple(this->view->initApple());
+
+            }
 
         }
 

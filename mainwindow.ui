@@ -25,6 +25,10 @@
   <property name="windowTitle">
    <string>Snake2D</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/icons/icons/icon.ico</normaloff>:/icons/icons/icon.ico</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,0,0">
     <item>
@@ -97,6 +101,12 @@
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
            </spacer>
           </item>
           <item>
@@ -133,6 +143,12 @@
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
            </spacer>
           </item>
          </layout>
@@ -146,6 +162,12 @@
            <spacer name="horizontalSpacer_4">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
             </property>
            </spacer>
           </item>
@@ -182,6 +204,12 @@
            <spacer name="horizontalSpacer_5">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
             </property>
            </spacer>
           </item>

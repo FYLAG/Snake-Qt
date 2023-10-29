@@ -29,6 +29,8 @@ public:
 
     enum directionMove { Up, Right, Down, Left };
 
+    bool getGameStop() override;
+
     QPoint initSnake() override;
     QPoint initApple() override;
 
@@ -51,7 +53,17 @@ private:
 
     directionMove snakeMove;
 
-    bool gamePlay;
+    bool gameOver;
+    bool gameStop;
+    bool keyFree;
+
+    int timerId;
+
+    void eventGameContinue();
+    void eventGameReset();
+    void eventGameStop();
+    void eventGameOver();
+    void eventGameWin();
 
 protected:
 
@@ -63,6 +75,10 @@ signals:
     /*! Signal to call a specific slot */
     void signalFrameNext() override;
 
+private slots:
+    void on_pushButton_play_clicked();
+    void on_pushButton_reset_clicked();
+    void on_pushButton_close_clicked();
 };
 
 #endif // GAMEWINDOW_H

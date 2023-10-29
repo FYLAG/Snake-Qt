@@ -14,7 +14,7 @@ MainWindow::~MainWindow() {
 
 void MainWindow::on_pushButton_play_clicked() {
 
-    this->gameWin = new GameWindow({11, 11}, 1);
+    this->gameWin = new GameWindow({21, 11}, 1);
     this->presenter = new Presenter(gameWin);
 
     this->gameWin->show();
