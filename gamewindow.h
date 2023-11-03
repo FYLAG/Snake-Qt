@@ -15,7 +15,7 @@
 #include <QPaintEvent>
 
 namespace Ui {
-class GameWindow;
+    class GameWindow;
 }
 
 class GameWindow : public QMainWindow, public IViewGame {

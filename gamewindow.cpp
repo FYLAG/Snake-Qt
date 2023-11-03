@@ -9,8 +9,14 @@ GameWindow::GameWindow(QSize _sizeArea, unsigned int _gameSpeed, QWidget *parent
     ui->setupUi(this);
 
     ui->frameGamePause->hide();
-    // ui->frameGameOver->hide();
-    // ui->frameGameWin->hide();
+    ui->frameGameOver->hide();
+    ui->frameGameWin->hide();
+
+    connect(ui->pushButton_close_2, SIGNAL(clicked()), this, SLOT(on_pushButton_close_clicked()));
+    connect(ui->pushButton_reset_2, SIGNAL(clicked()), this, SLOT(on_pushButton_reset_clicked()));
+
+    connect(ui->pushButton_close_3, SIGNAL(clicked()), this, SLOT(on_pushButton_close_clicked()));
+    connect(ui->pushButton_reset_3, SIGNAL(clicked()), this, SLOT(on_pushButton_reset_clicked()));
 
     snakeMove = directionMove::Right;
 
@@ -200,7 +206,20 @@ void GameWindow::eventGameContinue() {
 
 void GameWindow::eventGameReset() {
 
-    ui->frameGamePause->hide();
+    if (!ui->frameGamePause->isHidden()) {
+
+        ui->frameGamePause->hide();
+
+    } else if (!ui->frameGameOver->isHidden()) {
+
+        ui->frameGameOver->hide();
+
+    } else if (!ui->frameGameWin->isHidden()) {
+
+        ui->frameGameWin->hide();
+
+    }
+
     timerId = startTimer(DELAY);
 
 }
@@ -215,9 +234,17 @@ void GameWindow::eventGameStop() {
 
 void GameWindow::eventGameOver() {
 
+    killTimer(timerId);
+    this->gameStop = true;
+    ui->frameGameOver->show();
+
 }
 
 void GameWindow::eventGameWin() {
+
+    killTimer(timerId);
+    this->gameStop = true;
+    ui->frameGameWin->show();
 
 }
 
@@ -225,11 +252,9 @@ void GameWindow::on_pushButton_play_clicked() {
     eventGameContinue();
 }
 
-
 void GameWindow::on_pushButton_reset_clicked() {
     eventGameReset();
 }
-
 
 void GameWindow::on_pushButton_close_clicked() {
     this->close();
